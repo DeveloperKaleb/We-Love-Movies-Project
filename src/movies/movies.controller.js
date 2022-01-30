@@ -56,17 +56,12 @@ async function read(req, res) {
 }
 
 async function list(req, res) {
-    if (!req.query.is_showing) {
-        const data = await service.list();
-        res.json({
-            data,
-        })
-    } else {
-        const data = await service.isShowing();
-        res.json({
-            data,
-        })
-    }
+    const serviceToUse = req.query.is_showing ? service.isShowing : service.list 
+    const data = await serviceToUse();
+    res.json({
+        data,
+    })
+    
 }
 
 module.exports = {
